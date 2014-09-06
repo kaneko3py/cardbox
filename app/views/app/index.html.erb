@@ -1,0 +1,13 @@
+<div id="cards"></div>
+
+<script type="text/javascript">
+  $(function() {
+    // Cardbox is the app name
+    window.router = new Cardbox.Routers.CardsRouter({
+        cards: <%= @cards.to_json.html_safe -%>,
+        archived_cards:  <%= @archived_cards.to_json.html_safe -%>,
+    });
+    Backbone.history.start();
+  });
+</script>
+

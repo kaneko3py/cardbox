@@ -1,0 +1,34 @@
+<h1>Edit card</h1>
+
+<form id="edit-card" name="card" class="">
+  <div class="input-group">
+      <span class="input-group-addon"> user_id </span>
+      <input type="text" name="user_id" id="user_id" class="form-control" value="<%= user_id %>" >
+  </div>
+  <br/>
+  <div class="input-group">
+    <label for="no" class="input-group-addon"> no </label>
+    <input type="text" name="no" id="no" class="form-control" value="<%= no %>" >
+  </div>
+  <br/>
+  <div class="input-group">
+    <label for="question" class="input-group-addon"> question </label>
+    <input type="text" name="question" id="question" class="form-control" value="<%= question %>" >
+  </div>
+  <br/>
+  <div class="input-group">
+    <label for="answer" class="input-group-addon"> answer </label>
+    <input type="text" name="answer" id="answer" class="form-control" value="<%= answer %>" >
+  </div>
+  <br/>
+  <div class="input-group">
+    <label for="comment" class="input-group-addon"> comment </label>
+    <input type="text" name="comment" id="comment" class="form-control" value="<%= comment %>" >
+  </div>
+  <br/>
+  <div class="btn-group">
+    <input type="submit" value="Update" class="btn btn-primary" />
+    <a href="#/index" class="btn btn-default"> Cancel </a>
+  </div>
+
+</form>

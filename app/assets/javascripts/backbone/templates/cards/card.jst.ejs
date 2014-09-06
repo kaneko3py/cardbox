@@ -1,0 +1,13 @@
+<td><%= user_id %></td>
+<td><%= no %></td>
+<td><%= question %></td>
+<td><%= answer %></td>
+<td><%= comment %></td>
+<td>
+<% if (!is_archive) { %>
+    <a href="#/<%= id %>/edit" class="btn btn-xs btn-info">Edit</a>
+    <a href="#/<%= id %>/archive" class="btn btn-xs btn-warning">Archive</a>
+<% } else { %>
+    <a href="#/<%= id %>/unarchive" class="btn btn-xs btn-info">UnArchive</a>
+<% } %>
+</td>
