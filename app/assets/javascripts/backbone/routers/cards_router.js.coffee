@@ -2,6 +2,12 @@ class Cardbox.Routers.CardsRouter extends Backbone.Router
   initialize: (options) ->
     @cards = new Cardbox.Collections.CardsCollection()
 
+    info = new Cardbox.Models.Info()
+    info.fetch().done( ->
+        @view = new Cardbox.Views.Cards.InfoView(info: info)
+        $(".app-sidebar").html(@view.render().el)
+    )
+
   routes:
     "index"         : "index"
     "new"           : "newCard"

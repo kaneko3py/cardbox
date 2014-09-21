@@ -14,13 +14,22 @@ class CardsController < ApplicationController
   # GET /lottery
   def lottery
     @cards = Card.where({user_id: @current_user.id})
-    _cards_h = @cards.to_a.sample(5).map{ |_card|
-      _card = _card.attributes
-      _card["answers"] = @cards.find(_card["id"]).answers.order(rate: :desc,count: :desc,created_at: :asc).limit(6).to_a
-      _card
+    cards_h = @cards.to_a.sample(5).map{ |card|
+      card = card.attributes
+      card["answers"] = @cards.find(cd["id"]).answers.order(rate: :desc,count: :desc,created_at: :asc).limit(6).to_a
+      card
     }
-    render json: _cards_h.to_json
+    render json: cards_h.to_json
     # render json: @cards.to_json(include: :answers)
+  end
+
+  # GET /info
+  def info
+    good_cards = Activity.where({reliability: "A"}).count()
+    total_cards = Activity.count()
+    persent = (good_cards / total_cards).round(1)
+
+    render json: { good_cards: good_cards, total_cards: total_cards, persent: persent}
   end
 
   # # GET /cards/new

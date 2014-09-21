@@ -39,6 +39,18 @@ body {
     border-right: 1px solid #eee;
 }
 
+/* info */
+#sidebar-total p{
+    color: #31b0d5;
+    font-size: 40px;
+    margin: 10px 30px;
+}
+#sidebar-progress p{
+    color: #ec971f;
+    font-size: 40px;
+    margin: 10px 30px;
+}
+
 /* new card, edit card */
 .input-group {
     width: 80%;

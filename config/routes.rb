@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   get 'questions' => 'cards#lottery', :as => 'lottery'
 
+  get 'info' => 'cards#info', :as=> 'info'
+
   resources :cards
 
   resources :answers
