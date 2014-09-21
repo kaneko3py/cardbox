@@ -1,8 +1,9 @@
-<td><%= user_id %></td>
 <td><%= no %></td>
 <td><%= question %></td>
-<td><%= answer %></td>
-<td><%= comment %></td>
+<td class="text-center"><%= activity.good_answers + "/" + activity.total_answers %></td>
+<td class="text-center"><%= activity.reliability %></td>
+<td><% _created_at = new DateFormat("yyyy-MM-ddTHH:mm:ss.SSSZ").parse(created_at) %>
+    <%= new DateFormat("yyyy/MM/dd  HH:mm").format(_created_at) %></td>
 <td>
 <% if (!is_archive) { %>
     <a href="#/<%= id %>/edit" class="btn btn-xs btn-info">Edit</a>

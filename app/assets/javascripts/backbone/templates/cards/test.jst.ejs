@@ -3,17 +3,16 @@
         <div class="modal-content">
             <div class="modal-header">
                 <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
-                <h4 class="modal-title">Question #0?</h4>
+                <h4 class="modal-title"><%= "Question #" + question.no %></h4>
             </div>
             <div class="modal-body">
                 <div class="question-label">
-                    <p>aaaaaaaaaaa?</p>
+                    <p><%= question.question %></p>
                 </div>
                 <hr>
                 <div class="question-input">
                     <form id="test-answer" name="test-answer" class="form">
-                        <textarea name="answer" id="answer" class="form-control" value="" rows="5" autofocus="autofocus" >
-                        </textarea>
+                        <textarea name="answer" id="answer" class="form-control" value="" rows="5" autofocus="autofocus" ></textarea>
                     </form>
                 </div>
             </div>
@@ -31,16 +30,39 @@
                 <h4 class="modal-title">Answer Rating</h4>
             </div>
             <div class="modal-body">
-                <div class="answer-label">
-                    <p>bbbbbbbbbb</p>
+                <div id="your-answer">
+                    <div class="col-md-3 raty-answer"></div>
+                    <div class="col-md-9 answer-insert"><!-- your answer --></div>
                 </div>
                 <hr>
-                <div class="best-answers">
-                <!-- ... -->
+                <div id="card-comment">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10"><%= question.comment %></div>
+                    <div class="col-md-1"></div>
+                </div>
+                <br/>
+                <div id="best-answers" class="table-responsive">
+                    <table id="cards-table" class="table table-striped">
+                        <thead>
+                            <tr>
+                              <th class="col-md-3">Best Answers</th>
+                              <th class="col-md-9"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <% for( var _i = 0; _i < question.answers.length; _i++ ) { %>
+                            <tr>
+                                <td><div class="raty" data-score="<%= question.answers[_i].rate %>"></div></td>
+                                <td><%= question.answers[_i].answer %></td>
+                            </tr>
+                        <% } %>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" id="test-next" class="btn btn-primary">Next !</button>
+                <button type="button" id="test-next" class="btn btn-primary">OK</button>
+                <div class="raty-answer-big"></div>
             </div>
         </div>
     </div>

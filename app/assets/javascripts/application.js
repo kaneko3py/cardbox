@@ -18,4 +18,6 @@
 //= require backbone_rails_sync
 //= require backbone_datalink
 //= require backbone/cardbox
+//= require dateformat
+//= require raty/jquery.raty
 //= require_tree .

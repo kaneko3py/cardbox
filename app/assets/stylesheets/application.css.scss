@@ -15,6 +15,7 @@
  */
 
 @import "bootstrap";
+@import "raty/jquery.raty";
 
 body {
     padding-top: 50px;
@@ -38,15 +39,46 @@ body {
     border-right: 1px solid #eee;
 }
 
-.question-input .textarea {
+/* new card, edit card */
+.input-group {
+    width: 80%;
+    textarea {
+        resize: none;
+    }
+}
+
+#input-tag {
+    width: 50%;
+}
+
+
+/* mini-test */
+.question-input .form-control {
     resize: none;
     border-width:0px;
     border-style:none;
     box-shadow:none;
+    background-color:rgb(250, 250, 150);
+    color:black;
 }
 
 #test-modal .modal-header {
     background-color: #449d44;
     color: white;
     border-radius: 4px 4px 0px 0px;
+}
+
+#card-comment {
+    color: red;
+}
+
+#test-modal #test-next {
+    float: right;
+}
+#test-modal .raty-answer {
+    padding: 0px 7px;
+}
+#test-modal .raty-answer-big {
+    float: right;
+    margin: 5px 25px;
 }

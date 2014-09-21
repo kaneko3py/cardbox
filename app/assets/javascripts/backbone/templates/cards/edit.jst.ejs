@@ -1,34 +1,30 @@
-<h1>Edit card</h1>
+<h1>Edit card #<%= no %></h1>
 
 <form id="edit-card" name="card" class="">
-  <div class="input-group">
-      <span class="input-group-addon"> user_id </span>
-      <input type="text" name="user_id" id="user_id" class="form-control" value="<%= user_id %>" >
+  <div id="input-tag" class="input-group">
+    <label for="tag" class="input-group-addon"> tag </label>
+    <textarea name="tag" id="question" class="form-control" rows="1" ><%= tag %></textarea>
   </div>
-  <br/>
-  <div class="input-group">
-    <label for="no" class="input-group-addon"> no </label>
-    <input type="text" name="no" id="no" class="form-control" value="<%= no %>" >
-  </div>
-  <br/>
+  <br>
   <div class="input-group">
     <label for="question" class="input-group-addon"> question </label>
-    <input type="text" name="question" id="question" class="form-control" value="<%= question %>" >
+    <textarea name="question" id="question" class="form-control" rows="4" ><%= question %></textarea>
   </div>
   <br/>
   <div class="input-group">
     <label for="answer" class="input-group-addon"> answer </label>
-    <input type="text" name="answer" id="answer" class="form-control" value="<%= answer %>" >
+    <textarea name="question" id="answer" class="form-control" rows="4"><%= answer %></textarea>
   </div>
   <br/>
   <div class="input-group">
     <label for="comment" class="input-group-addon"> comment </label>
-    <input type="text" name="comment" id="comment" class="form-control" value="<%= comment %>" >
+    <textarea name="comment" id="answer" class="form-control" rows="2"><%= comment %></textarea>
   </div>
   <br/>
+  <br/>
   <div class="btn-group">
-    <input type="submit" value="Update" class="btn btn-primary" />
     <a href="#/index" class="btn btn-default"> Cancel </a>
+    <input type="submit" value="Save" class="btn btn-primary" />
   </div>
 
 </form>

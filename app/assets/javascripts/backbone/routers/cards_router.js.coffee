@@ -1,9 +1,6 @@
 class Cardbox.Routers.CardsRouter extends Backbone.Router
   initialize: (options) ->
     @cards = new Cardbox.Collections.CardsCollection()
-    @cards.reset options.cards
-    @archived_cards = new Cardbox.Collections.ArchivedCardsCollection()
-    @archived_cards.reset options.archived_cards
 
   routes:
     "index"         : "index"
@@ -21,7 +18,9 @@ class Cardbox.Routers.CardsRouter extends Backbone.Router
     $("div.navbar ul li").removeClass("active");
     $("div.navbar ul li :eq(0)").addClass("active");  # 0: HOME
 
-    @view = new Cardbox.Views.Cards.IndexView(cards: @cards)
+    active_cards = new Cardbox.Collections.CardsCollection()
+    active_cards.reset @cards.where({'is_archive': false})
+    @view = new Cardbox.Views.Cards.IndexView(active_cards: active_cards)
     $("#cards").html(@view.render().el)
 
   newCard: ->
@@ -44,23 +43,25 @@ class Cardbox.Routers.CardsRouter extends Backbone.Router
     card = @cards.get(id)
 
     card.set('is_archive',true)
-    card.save()
-
-    window.location.hash = "index"
+    card.save().done(
+        window.location.hash = "index"
+    )
 
   unarchiveCard: (id) ->
-    card = @archived_cards.get(id)
+    card = @cards.get(id)
 
     card.set('is_archive',false)
-    card.save()
-
-    window.location.hash = "index"
+    card.save().done(
+        window.location.hash = "index"
+    )
 
   archive: ->
     $("div.navbar ul li").removeClass("active");
     $("div.navbar ul li :eq(1)").addClass("active");  # 1: ARCHIVE
 
-    @view = new Cardbox.Views.Cards.ArchiveView(archived_cards: @archived_cards)
+    archived_cards = new Cardbox.Collections.CardsCollection()
+    archived_cards.reset @cards.where({'is_archive': true})
+    @view = new Cardbox.Views.Cards.ArchiveView(archived_cards: archived_cards)
     $("#cards").html(@view.render().el)
 
   settings: (id) ->
@@ -78,7 +79,8 @@ class Cardbox.Routers.CardsRouter extends Backbone.Router
         $("#test-modal").on('hidden.bs.modal', ->
             window.location.hash = "index"
         )
-        $("#test-modal").modal({show: true, backdrop: 'strict', keybord: false})
+        # $("#test-modal").modal({show: true, backdrop: 'strict', keybord: false})
+        $("#test-modal").modal({show: true, backdrop: 'strict'})
     )
 
 

@@ -21,9 +21,8 @@ class Cardbox.Views.Cards.NewView extends Backbone.View
     @model.unset("errors")
 
     @collection.create(@model.toJSON(),
-      success: (card) =>
-        @model = card
-        #window.location.hash = "/#{@model.id}"
+      success: (_card) =>
+        @model = _card
         window.location.hash = "index"
 
       error: (card, jqXHR) =>

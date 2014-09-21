@@ -11,7 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140815154831) do
+ActiveRecord::Schema.define(version: 20140917161939) do
+
+  create_table "activities", force: true do |t|
+    t.integer  "card_id"
+    t.integer  "good_answers"
+    t.integer  "total_answers"
+    t.string   "reliability"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "answers", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "card_id"
+    t.text     "answer"
+    t.integer  "count"
+    t.float    "rate"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "cards", force: true do |t|
     t.integer  "user_id"
@@ -19,9 +38,10 @@ ActiveRecord::Schema.define(version: 20140815154831) do
     t.text     "question"
     t.text     "answer"
     t.text     "comment"
-    t.boolean  "is_archive"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_archive"
+    t.string   "tag"
   end
 
   create_table "users", force: true do |t|

@@ -12,18 +12,30 @@ class Cardbox.Views.Cards.TestQuestionView extends Backbone.View
 
   new_answer: ->
     @answer = new Cardbox.Models.Answer()
-    @answer.set("answer",$("").text())
+    @answer.set("answer",$("#answer").val())
+
+    $("#your-answer .answer-insert").text($("#answer").val())
+    $(".raty-answer").raty({readOnly: true})
+    $(".raty-answer-big").raty(starOff: 'big-star-off.png', starOn: 'big-star-on.png', click: (score,evt)->
+       $(".raty-answer").raty({readOnly:true, score: score})
+    )
+    $(".raty").raty({readOnly: true, score: ->
+       @getAttribute('data-score');
+    })
 
     $("#modal-test-question").addClass("hidden")
     $("#modal-test-answer").removeClass("hidden")
 
   save_answer: ->
     @count++
-    if @count >= 5
+    if @count >= @options.questions.models.length
         $("#test-modal").modal("hide")
+        return
 
-    @answer.set("rate",5)
-    # @answer.save()
+    @answer.set("card_id",@question.id)
+    _rate = $('.raty-answer-big input[type="hidden"]').val() || 0
+    @answer.set("rate",_rate)
+    @answer.save()
 
     $("#modal-test-answer").addClass("hidden")
     $("#modal-test-question").html(@render().$el.find("#modal-test-question").html())
@@ -31,5 +43,6 @@ class Cardbox.Views.Cards.TestQuestionView extends Backbone.View
     $("#modal-test-question").removeClass("hidden")
 
   render: ->
-    @$el.html(@template(@options.questions.models[@count].toJSON()))
+    @question = @options.questions.models[@count]
+    @$el.html(@template({question: @question.toJSON()}))
     return this
