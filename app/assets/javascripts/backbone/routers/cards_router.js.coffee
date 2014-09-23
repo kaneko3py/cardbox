@@ -11,10 +11,11 @@ class Cardbox.Routers.CardsRouter extends Backbone.Router
   routes:
     "index"         : "index"
     "new"           : "newCard"
-    "archive"       : "archive"
-    "setting"       : "setting"
     "test"          : "test"
-    ":id"           : "showCard"
+    "archive"       : "archive"
+    "study"         : "study"
+    "setting"       : "setting"
+    # ":id"           : "showCard"
     ":id/edit"      : "editCard"
     ":id/archive"   : "archiveCard"
     ":id/unarchive" : "unarchiveCard"
@@ -33,11 +34,11 @@ class Cardbox.Routers.CardsRouter extends Backbone.Router
     @view = new Cardbox.Views.Cards.NewView(collection: @cards)
     $("#cards").html(@view.render().el)
 
-  showCard: (id) ->
-    card = @cards.get(id)
+  # showCard: (id) ->
+  #   card = @cards.get(id)
 
-    @view = new Cardbox.Views.Cards.ShowView(model: card)
-    $("#cards").html(@view.render().el)
+  #   @view = new Cardbox.Views.Cards.ShowView(model: card)
+  #   $("#cards").html(@view.render().el)
 
   editCard: (id) ->
     card = @cards.get(id)
@@ -70,9 +71,20 @@ class Cardbox.Routers.CardsRouter extends Backbone.Router
     @view = new Cardbox.Views.Cards.ArchiveView(archived_cards: archived_cards)
     $("#cards").html(@view.render().el)
 
+  study: (id) ->
+    $("div.navbar ul li").removeClass("active");
+    $("div.navbar ul li :eq(2)").addClass("active");  # 2: STUDY
+
+    cards = @cards
+    tags = new Cardbox.Collections.TagsCollection()
+    tags.fetch().done( ->
+        @view = new Cardbox.Views.Cards.StudyView(tags: tags, cards: cards)
+        $("#cards").html(@view.render().el)
+    )
+
   settings: (id) ->
     $("div.navbar ul li").removeClass("active");
-    $("div.navbar ul li :eq(2)").addClass("active");  # 2: LIST
+    $("div.navbar ul li :eq(3)").addClass("active");  # 3: SETTING
 
     card = @cards.get(id)
     # ...

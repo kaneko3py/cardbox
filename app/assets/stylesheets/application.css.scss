@@ -40,15 +40,25 @@ body {
 }
 
 /* info */
-#sidebar-total p{
-    color: #31b0d5;
-    font-size: 40px;
-    margin: 10px 30px;
-}
-#sidebar-progress p{
-    color: #ec971f;
-    font-size: 40px;
-    margin: 10px 30px;
+#sidebar-info {
+
+    .label {
+        font-size: 25px;
+        color: #5d5d5d;
+    }
+    .sidebar-total{
+        color: #31b0d5;
+        font-size: 40px;
+        margin: 10px 30px;
+    }
+    .sidebar-progress{
+        color: #ec971f;
+        font-size: 40px;
+        margin: 10px 30px;
+    }
+    hr{
+        border-top: 1px solid rgb(206, 201, 201);
+    }
 }
 
 /* new card, edit card */
@@ -93,4 +103,25 @@ body {
 #test-modal .raty-answer-big {
     float: right;
     margin: 5px 25px;
+}
+
+/* study */
+#search-card select{
+    height: 34px;
+    width: 220px;
+    border: 1px solid #bbb;
+    margin: 1px 5px;
+    background: white;
+}
+#searched-cards-table {
+    p {
+        margin: 0px;
+    }
+    hr {
+        margin: 5px 0px;
+    }
+    .answer{
+        margin: 0px 20px;
+        color: red;
+    }
 }

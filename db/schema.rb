@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140917161939) do
+ActiveRecord::Schema.define(version: 20140923080958) do
 
   create_table "activities", force: true do |t|
     t.integer  "card_id"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20140917161939) do
     t.string   "reliability"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   create_table "answers", force: true do |t|
@@ -42,6 +43,16 @@ ActiveRecord::Schema.define(version: 20140917161939) do
     t.datetime "updated_at"
     t.boolean  "is_archive"
     t.string   "tag"
+    t.integer  "total_answers"
+    t.integer  "good_answers"
+    t.string   "reliability"
+  end
+
+  create_table "tags", force: true do |t|
+    t.integer  "user_id"
+    t.string   "tag"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|

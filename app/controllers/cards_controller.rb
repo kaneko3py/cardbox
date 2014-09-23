@@ -4,7 +4,7 @@ class CardsController < ApplicationController
 
   def index
     @cards = Card.where({user_id: @current_user.id})
-    render json: @cards.to_json({include: :activity})
+    render json: @cards.to_json()
   end
 
   # GET /cards/1
@@ -16,7 +16,7 @@ class CardsController < ApplicationController
     @cards = Card.where({user_id: @current_user.id})
     cards_h = @cards.to_a.sample(5).map{ |card|
       card = card.attributes
-      card["answers"] = @cards.find(cd["id"]).answers.order(rate: :desc,count: :desc,created_at: :asc).limit(6).to_a
+      card["answers"] = @cards.find(card["id"]).answers.order(rate: :desc,count: :desc,created_at: :asc).limit(6).to_a
       card
     }
     render json: cards_h.to_json
@@ -25,11 +25,18 @@ class CardsController < ApplicationController
 
   # GET /info
   def info
-    good_cards = Activity.where({reliability: "A"}).count()
-    total_cards = Activity.count()
-    persent = (good_cards / total_cards).round(1)
+    good_cards = Card.where({user_id: @current_user.id, reliability: "A"}).count()
+    total_cards = Card.where({user_id: @current_user.id}).count()
+    persent = (total_cards !=0 ? (good_cards / total_cards).round(1) : 0)
 
     render json: { good_cards: good_cards, total_cards: total_cards, persent: persent}
+  end
+
+  # GET /tags
+  def tags
+    tags = Tag.where({user_id: @current_user.id})
+
+    render json: tags.to_json
   end
 
   # # GET /cards/new
@@ -50,9 +57,11 @@ class CardsController < ApplicationController
     rescue
       @card.no = 1
     end
+    @card.total_answers = 0
+    @card.good_answers = 0
 
     if @card.save
-      render json: @card.to_json({include: :activity})
+      render json: @card.to_json()
     else
       render json: { status: :unprocessable_entity, errors: @card.errors }
     end

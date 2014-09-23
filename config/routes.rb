@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   get 'info' => 'cards#info', :as=> 'info'
 
+  get 'tags' => 'cards#tags', :as=> 'tags'
+
   resources :cards
 
   resources :answers

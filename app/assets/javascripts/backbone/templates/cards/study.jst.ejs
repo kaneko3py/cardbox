@@ -1,0 +1,35 @@
+<div class="col-md-4">
+  <h1>Study cards</h1>
+</div>
+<div class="col-md-8">
+  <form id="search-card" name="card" class="form">
+    <select name="tag">
+      <option value="ALL">ALL</option>
+      <% for( var i = 0; i < tags.length; i++ ) { %>
+        <option value="<%= tags[i].tag %>"><%= tags[i].tag %></option>
+      <% } %>
+    </select>
+    <div class="btn-group">
+      <a href="#" class="search-reliability btn btn-default"> A </a>
+      <a href="#" class="search-reliability btn btn-default"> B </a>
+      <a href="#" class="search-reliability btn btn-default"> C </a>
+      <a href="#" class="search-reliability btn btn-default"> D </a>
+      <a href="#" class="search-reliability btn btn-default"> E </a>
+    </div>
+    <a href="#" id="search-btn" class="btn btn-success" style="margin: 16px; float: none;"> Search </a>
+  </form>
+</div>
+
+<div class="table-responsive">
+  <table id="searched-cards-table" class="table table-striped">
+    <thead>
+        <tr>
+          <th class="col-md-1">No</th>
+          <th class="col-md-9">Question</th>
+          <th class="col-md-2">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>

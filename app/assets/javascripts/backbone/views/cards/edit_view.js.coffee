@@ -13,7 +13,8 @@ class Cardbox.Views.Cards.EditView extends Backbone.View
     @model.save(null,
       success: (card) =>
         @model = card
-        window.location.hash = "/#{@model.id}"
+        # window.location.hash = "/#{@model.id}"
+        window.location.hash = "#index"
     )
 
   render: ->
