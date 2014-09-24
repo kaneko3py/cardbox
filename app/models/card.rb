@@ -1,6 +1,7 @@
 class Card < ActiveRecord::Base
     has_many :answers
     before_save :calc_reliability
+    before_update :update_tag
     after_create :create_answer
     after_create :create_tag
 
@@ -26,9 +27,36 @@ class Card < ActiveRecord::Base
     def create_tag
         if tag
             tag.split(" ").each{ |tag_str|
-                _tag = Tag.new({user_id: user_id, tag: tag_str})
-                _tag.save()
+                if Tag.where({user_id: user_id, tag: tag_str}).count() == 0
+                    _tag = Tag.new({user_id: user_id, tag: tag_str})
+                    _tag.save()
+                end
             }
         end
+    end
+
+    def update_tag
+        _card = Card.find(id)
+        return if _card.tag == tag
+
+        card_tags = tag.split(" ")
+        prv_card_tags = _card.tag.split(" ")
+        user_tags = Tag.where({user_id: user_id})
+
+        # 追加があればInsert
+        (card_tags - prv_card_tags - user_tags).each{ |tag_str|
+            if Tag.where({user_id: user_id, tag: tag_str}).count() == 0
+                _tag = Tag.new({user_id: user_id, tag: tag_str})
+                _tag.save()
+            end
+        }
+
+        # 消えていて、かつ他のCardにもなさそうだったらDelete
+        (prv_card_tags - card_tags).each{ |tag_str|
+            if Card.where("user_id = ? and ' '||tag||' ' like ?", user_id, "% #{tag_str} %").count() == 1
+                _tag = Tag.where({user_id: user_id, tag: tag_str}).first()
+                _tag.destroy()
+            end
+        }
     end
 end
