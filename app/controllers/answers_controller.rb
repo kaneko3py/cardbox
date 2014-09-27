@@ -1,10 +1,10 @@
 class AnswersController < ApplicationController
-  before_action :required_login
+  before_action authenticate_user!
 
   # POST /cards
   def create
     @answer = Answer.new(answer_params)
-    @answer.user_id = @current_user.id
+    @answer.user_id = current_user.id
 
     if @answer.save
       render json: { status: :created, location: @answer }

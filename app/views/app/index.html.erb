@@ -1,3 +1,16 @@
+<!-- devise -->
+<p id="login_chip" class="navbar-text pull-right">
+    <% if user_signed_in? %>
+      <span><%= current_user.email %></span>
+      <%= link_to 'Edit', edit_user_registration_path, :class => 'navbar-link' %> |
+      <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+    <% else %>
+      <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
+      <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+    <% end %>
+</p>
+<!-- /devise -->
+
 <div id="cards"></div>
 
 <script type="text/javascript">

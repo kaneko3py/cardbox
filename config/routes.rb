@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  devise_for :users
+
+  get '/' => redirect('/app')
+
   get 'app' => 'app#index', :as => 'home'
 
   get 'questions' => 'cards#lottery', :as => 'lottery'

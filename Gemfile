@@ -41,7 +41,7 @@ gem 'spring',        group: :development
 
 ## simple_form
 # rails generate simple_form:install --bootstrap
-gem 'simple_form'
+# gem 'simple_form'
 
 ## Use bootstrap3
 gem 'bootstrap-sass', '~> 3.1.1'
@@ -54,4 +54,6 @@ gem 'bootstrap-sass', '~> 3.1.1'
 # rails g backbone:scaffold
 gem "rails-backbone"
 
-
+## Use devise
+# rails generate devise:install
+gem "devise"

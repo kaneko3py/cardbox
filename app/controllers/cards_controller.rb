@@ -1,9 +1,9 @@
 class CardsController < ApplicationController
-  before_action :required_login
+  before_action :authenticate_user!
   before_action :set_card, only: [:show, :edit, :update, :destroy]
 
   def index
-    @cards = Card.where({user_id: @current_user.id})
+    @cards = Card.where({user_id: current_user.id})
     render json: @cards.to_json()
   end
 
@@ -13,7 +13,7 @@ class CardsController < ApplicationController
 
   # GET /lottery
   def lottery
-    @cards = Card.where({user_id: @current_user.id})
+    @cards = Card.where({user_id: current_user.id})
     cards_h = @cards.to_a.sample(5).map{ |card|
       card = card.attributes
       card["answers"] = @cards.find(card["id"]).answers.order(rate: :desc,count: :desc,created_at: :asc).limit(6).to_a
@@ -25,8 +25,8 @@ class CardsController < ApplicationController
 
   # GET /info
   def info
-    good_cards = Card.where({user_id: @current_user.id, reliability: "A"}).count()
-    total_cards = Card.where({user_id: @current_user.id}).count()
+    good_cards = Card.where({user_id: current_user.id, reliability: "A"}).count()
+    total_cards = Card.where({user_id: current_user.id}).count()
     persent = (total_cards !=0 ? (good_cards / total_cards).round(1) : 0)
 
     render json: { good_cards: good_cards, total_cards: total_cards, persent: persent}
@@ -34,7 +34,7 @@ class CardsController < ApplicationController
 
   # GET /tags
   def tags
-    tags = Tag.where({user_id: @current_user.id})
+    tags = Tag.where({user_id: current_user.id})
 
     render json: tags.to_json
   end
@@ -51,9 +51,9 @@ class CardsController < ApplicationController
   # POST /cards
   def create
     @card = Card.new(card_params)
-    @card.user_id = @current_user.id
+    @card.user_id = current_user.id
     begin
-      @card.no = Card.maximum(:no, user_id: @current_user.id) + 1
+      @card.no = Card.maximum(:no, user_id: current_user.id) + 1
     rescue
       @card.no = 1
     end

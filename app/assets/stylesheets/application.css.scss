@@ -39,12 +39,26 @@ body {
     border-right: 1px solid #eee;
 }
 
+#login_chip {
+    position: fixed;
+    top: 0px;
+    right:  20px;
+    z-index: 2000;
+
+    span {
+        color: white;
+        margin: 20px;
+        font-style: italic;
+        font-weight: lighter;
+    }
+}
+
 /* info */
 #sidebar-info {
 
     .label {
         font-size: 25px;
-        color: #5d5d5d;
+        color: #333333;
     }
     .sidebar-total{
         color: #31b0d5;
