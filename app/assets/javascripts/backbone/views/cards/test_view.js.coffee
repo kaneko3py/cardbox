@@ -14,14 +14,23 @@ class Cardbox.Views.Cards.TestQuestionView extends Backbone.View
     @answer = new Cardbox.Models.Answer()
     @answer.set("answer",$("#answer").val())
 
-    $("#your-answer .answer-insert").text($("#answer").val())
-    $(".raty-answer").raty({readOnly: true})
-    $(".raty-answer-big").raty(starOff: 'big-star-off.png', starOn: 'big-star-on.png', click: (score,evt)->
-       $(".raty-answer").raty({readOnly:true, score: score})
-    )
+    # best answers
     $(".raty").raty({readOnly: true, score: ->
        @getAttribute('data-score');
     })
+
+    # your answer
+    your_answer = $("#answer").val()
+    ans_def_score = 0;
+    @question.get("answers").forEach( (ans) ->
+        if ans.answer == your_answer
+            ans_def_score = ans.rate
+    )
+    $("#your-answer .answer-insert").text(your_answer)
+    $(".raty-answer").raty({readOnly: true, score: ans_def_score})
+    $(".raty-answer-big").raty(starOff: 'big-star-off.png', starOn: 'big-star-on.png', score: ans_def_score, click: (score,evt)->
+       $(".raty-answer").raty({readOnly:true, score: score})
+    )
 
     $("#modal-test-question").addClass("hidden")
     $("#modal-test-answer").removeClass("hidden")

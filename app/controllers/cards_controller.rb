@@ -2,6 +2,10 @@ class CardsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_card, only: [:show, :edit, :update, :destroy]
 
+  # lottery const
+  NUMBER_OF_TESTS = 5
+  MAX_BEST_CARDS = 6
+
   def index
     @cards = Card.where({user_id: current_user.id})
     render json: @cards.to_json()
@@ -13,10 +17,11 @@ class CardsController < ApplicationController
 
   # GET /lottery
   def lottery
+
     @cards = Card.where({user_id: current_user.id})
-    cards_h = @cards.to_a.sample(5).map{ |card|
+    cards_h = @cards.to_a.sample(NUMBER_OF_TESTS).map{ |card|
       card = card.attributes
-      card["answers"] = @cards.find(card["id"]).answers.order(rate: :desc,count: :desc,created_at: :asc).limit(6).to_a
+      card["answers"] = @cards.find(card["id"]).answers.order(rate: :desc,count: :desc,created_at: :asc).limit(MAX_BEST_CARDS).to_a
       card
     }
     render json: cards_h.to_json
@@ -53,7 +58,7 @@ class CardsController < ApplicationController
     @card = Card.new(card_params)
     @card.user_id = current_user.id
     begin
-      @card.no = Card.maximum(:no, user_id: current_user.id) + 1
+      @card.no = Card.where(user_id: current_user.id).maximum(:no) + 1
     rescue
       @card.no = 1
     end
