@@ -21,6 +21,10 @@ body {
     padding-top: 50px;
 }
 
+.navbar-inverse .navbar-brand {
+    color: #fff;
+}
+
 .input-group-addon {
     width: 100px;
 }
@@ -50,6 +54,10 @@ body {
         margin: 20px;
         font-style: italic;
         font-weight: lighter;
+    }
+
+    @media (max-width: 767px) {
+        display: none;
     }
 }
 
@@ -81,7 +89,12 @@ body {
     hr{
         border-top: 1px solid rgb(206, 201, 201);
     }
+
+    @media (max-width: 767px) {
+        display: none;
+    }
 }
+
 
 /* new card, edit card */
 .input-group {
