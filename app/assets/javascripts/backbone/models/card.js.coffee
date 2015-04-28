@@ -1,5 +1,6 @@
 class Cardbox.Models.Card extends Backbone.Model
   paramRoot: 'card'
+  urlRoot: 'cards'
 
   defaults:
     user_id: null
@@ -14,6 +15,8 @@ class Cardbox.Models.Card extends Backbone.Model
     created_at: null
     updated_at: null
     is_archive: false
+    is_link: false
+    original: null
 
 class Cardbox.Collections.CardsCollection extends Backbone.Collection
   model: Cardbox.Models.Card

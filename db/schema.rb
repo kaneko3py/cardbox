@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140926175516) do
+ActiveRecord::Schema.define(version: 20150427090008) do
 
   create_table "activities", force: true do |t|
     t.integer  "card_id"
@@ -46,6 +46,8 @@ ActiveRecord::Schema.define(version: 20140926175516) do
     t.integer  "total_answers"
     t.integer  "good_answers"
     t.string   "reliability"
+    t.boolean  "is_link"
+    t.integer  "original"
   end
 
   create_table "tags", force: true do |t|

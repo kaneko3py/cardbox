@@ -5,6 +5,7 @@ class CardsController < ApplicationController
   # lottery const
   NUMBER_OF_TESTS = 5
   MAX_BEST_CARDS = 6
+  MAX_EXT_CARDS = 1
 
   def index
     @cards = Card.where({user_id: current_user.id})
@@ -17,14 +18,33 @@ class CardsController < ApplicationController
 
   # GET /lottery
   def lottery
-
-    @cards = Card.where({user_id: current_user.id})
-    cards_h = @cards.to_a.sample(NUMBER_OF_TESTS).map{ |card|
-      card = card.attributes
-      card["answers"] = @cards.find(card["id"]).answers.order(rate: :desc,count: :desc,created_at: :asc).limit(MAX_BEST_CARDS).to_a
-      card
+    draw_cards = Card.where({user_id: current_user.id, is_archive: false}).to_a.sample(NUMBER_OF_TESTS)
+    ext_cards = Card.where.not({user_id: current_user.id}).to_a.sample(MAX_EXT_CARDS)
+    ext_cards.each{ |ext_card|
+      flg = false
+      draw_cards.each{ |card|
+        if card.original == ext_card.id
+          flg = true
+          break
+        end
+      }
+      unless flg
+        draw_cards.push(ext_card)
+      end
     }
-    render json: cards_h.to_json
+
+    cards_hash = draw_cards.to_a.sample(NUMBER_OF_TESTS).map{ |card|
+      card_attr = card.attributes
+      card_attr[:answers] = if not card.is_link?
+                              Card.find(card.id).answers.order(rate: :desc,count: :desc,created_at: :asc).limit(MAX_BEST_CARDS).to_a
+                            else
+                              Card.find(card.original).answers.order(rate: :desc,count: :desc,created_at: :asc).limit(MAX_BEST_CARDS).to_a
+                            end
+      card_attr[:is_ext] = (card.user_id != current_user.id)
+      card_attr
+    }
+
+    render json: cards_hash.to_json
     # render json: @cards.to_json(include: :answers)
   end
 
@@ -43,15 +63,6 @@ class CardsController < ApplicationController
 
     render json: tags.to_json
   end
-
-  # # GET /cards/new
-  # def new
-  #   @card = Card.new
-  # end
-
-  # # GET /cards/1/edit
-  # def edit
-  # end
 
   # POST /cards
   def create
@@ -95,6 +106,6 @@ class CardsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def card_params
-      params.require(:card).permit(:no, :tag, :question, :answer, :comment, :is_archive)
+      params.require(:card).permit(:no, :tag, :question, :answer, :comment, :is_archive, :is_link, :original)
     end
 end

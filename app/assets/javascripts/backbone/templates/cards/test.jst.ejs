@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
-                <h4 class="modal-title"><%= "Question #" + question.no %></h4>
+                <h4 class="modal-title"><%= "Question #" + (question.is_ext ? "External": question.no) %></h4>
             </div>
             <div class="modal-body">
                 <div class="question-label">
@@ -50,10 +50,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <% for( var _i = 0; _i < question.answers.length; _i++ ) { %>
+                        <% for( var i = 0; i < question.answers.length; i++ ) { %>
                             <tr>
-                                <td><div class="raty" data-score="<%= question.answers[_i].rate %>"></div></td>
-                                <td><%= question.answers[_i].answer %></td>
+                                <td><div class="raty" data-score="<%= question.answers[i].rate %>"></div></td>
+                                <td><%= question.answers[i].answer %></td>
                             </tr>
                         <% } %>
                         </tbody>
@@ -62,6 +62,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" id="test-next" class="btn btn-primary">OK</button>
+                <% if (question.is_ext) { %>
+                    <button type="button" id="test-clone" class="btn btn-warning">Clone</button>
+                <% } %>
                 <div class="raty-answer-big"></div>
             </div>
         </div>

@@ -15,7 +15,7 @@ class Cardbox.Routers.CardsRouter extends Backbone.Router
     "archive"       : "archive"
     "study"         : "study"
     "setting"       : "setting"
-    # ":id"           : "showCard"
+  # ":id"           : "showCard"
     ":id/edit"      : "editCard"
     ":id/archive"   : "archiveCard"
     ":id/unarchive" : "unarchiveCard"

@@ -9,6 +9,7 @@ class Cardbox.Views.Cards.TestQuestionView extends Backbone.View
   events:
     "click #test-ok": "new_answer"
     "click #test-next": "save_answer"
+    "click #test-clone.btn": "clone_card"
 
   new_answer: ->
     @answer = new Cardbox.Models.Answer()
@@ -50,6 +51,17 @@ class Cardbox.Views.Cards.TestQuestionView extends Backbone.View
     $("#modal-test-question").html(@render().$el.find("#modal-test-question").html())
     $("#modal-test-answer").html(@render().$el.find("#modal-test-answer").html())
     $("#modal-test-question").removeClass("hidden")
+
+  clone_card: ->
+    @card = new Cardbox.Models.Card()
+    @card.set("question", @question.attributes.question)
+    @card.set("answer"  , @question.attributes.answer)
+    @card.set("is_link" , true)
+    @card.set("original", @question.attributes.id)
+    @card.save()
+
+    $("#test-clone").text("cloned.")
+    $("#test-clone").prop("disabled", true);
 
   render: ->
     @question = @options.questions.models[@count]

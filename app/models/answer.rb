@@ -1,6 +1,15 @@
 class Answer < ActiveRecord::Base
-    belongs_to :card, foreign_key: :card_no
+    belongs_to :card
+    before_create :check_card_link
     after_create :update_card_status
+
+    private
+    def check_card_link
+        card = Card.find(card_id)
+        if card.is_link?
+            self.card_id = card.original
+        end
+    end
 
     def update_card_status
         card = Card.find(card_id)
